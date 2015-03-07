@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request, abort
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
@@ -52,7 +52,16 @@ def get_items():
 
 @app.route('/transactions', methods=['GET'])
 def get_transactions():
-    return jsonify({'items': list(map(lambda x: x.as_dict(), Transaction.query.all()))})
+    return jsonify({'transactions': list(map(lambda x: x.as_dict(), Transaction.query.all()))})
+
+@app.route('/transactions', methods=['POST'])
+def add_transaction():
+    if not request.json or not 'item_id' in request.json or not 'quantity' in request.json:
+        abort(400)
+    new_transaction = Transaction(item_id = request.json['item_id'], quantity = request.json['quantity'])
+    db.session.add(new_transaction)
+    db.session.commit()
+    return jsonify({'transaction': new_transaction.as_dict()}), 201
 
 if __name__ == '__main__':
     app.debug = True
