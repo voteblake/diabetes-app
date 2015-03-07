@@ -50,6 +50,12 @@ class Transaction(db.Model):
 def get_items():
     return jsonify({'items': list(map(lambda x: x.as_dict(), Item.query.all()))})
 
+@app.route('/item/<int:item_id>/inventory', methods=['GET'])
+def get_item_inventory(item_id):
+    count = sum(transaction.quantity for transaction in Transaction.query.filter_by(item_id = item_id).all())
+    return jsonify({"id": item_id, "count": count})
+
+
 @app.route('/transactions', methods=['GET'])
 def get_transactions():
     return jsonify({'transactions': list(map(lambda x: x.as_dict(), Transaction.query.all()))})
