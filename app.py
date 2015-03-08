@@ -76,7 +76,7 @@ def get_items():
     """
     return jsonify({'items': list(map(lambda x: x.as_dict(), Item.query.all()))})
 
-@app.route('/items/new', methods=['POST'])
+@app.route('/items', methods=['POST'])
 def add_item():
     """
     For a valid JSON POSt HTTP verb that contains at least
