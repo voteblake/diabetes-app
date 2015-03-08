@@ -7,7 +7,7 @@ and view their current inventory
 """
 from datetime import datetime
 
-from flask import Flask, jsonify, request, abort
+from flask import Flask, jsonify, render_template, request, abort
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
@@ -68,6 +68,10 @@ class Transaction(db.Model):
         Method for returning a valid dictionary from SQLAlchemy model objects
         """
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+@app.route('/', methods=['GET'])
+def index():
+    return render_template('index.html')
 
 @app.route('/items', methods=['GET'])
 def get_items():
