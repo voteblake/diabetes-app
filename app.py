@@ -33,7 +33,7 @@ class Item(db.Model):
     description = db.Column(db.Text)
     transactions = db.relationship("Transaction", backref="item")
 
-    def __init__(self, name, description):
+    def __init__(self, name, description=None):
         self.name = name
         self.description = description
 
@@ -75,6 +75,22 @@ def get_items():
     Returns a JSON document of all items
     """
     return jsonify({'items': list(map(lambda x: x.as_dict(), Item.query.all()))})
+
+@app.route('/items/new', methods=['POST'])
+def add_item():
+    """
+    For a valid JSON POSt HTTP verb that contains at least
+    an item name creates a new item with that name
+    """
+    if not request.json or not 'name' in request.json:
+        abort(400)
+    new_item = Item(name=request.json['name'])
+    if 'description' in request.json:
+        new_item.description = request.json['description']
+
+    db.session.add(new_item)
+    db.session.commit()
+    return jsonify({'item': new_item.as_dict()}), 201
 
 @app.route('/items/<int:item_id>/inventory', methods=['GET'])
 def get_item_inventory(item_id):
