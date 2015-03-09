@@ -121,9 +121,10 @@ def add_transaction():
     creates a new transaction timestamped at now
 
     TODO: Optionally, take a user specified time
-    TODO: Validate item id
     """
     if not request.json or not 'item_id' in request.json or not 'quantity' in request.json:
+        abort(400)
+    if Item.query.get(request.json['item_id']) == None:
         abort(400)
     new_transaction = Transaction(item_id=request.json['item_id'], quantity=request.json['quantity'])
     db.session.add(new_transaction)
