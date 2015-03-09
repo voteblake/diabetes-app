@@ -100,9 +100,8 @@ def add_item():
 def get_item_inventory(item_id):
     """
     For a given valid item id returns the count on hand
-
-    TODO: Validate item id
     """
+    Item.query.get_or_404(item_id)
     count = sum(transaction.quantity for transaction in Transaction.query.filter_by(item_id=item_id).all())
     return jsonify({"id": item_id, "count": count})
 
