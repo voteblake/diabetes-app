@@ -103,7 +103,7 @@ def get_item_inventory(item_id):
     """
     Item.query.get_or_404(item_id)
     count = sum(transaction.quantity for transaction in Transaction.query.filter_by(item_id=item_id).all())
-    return jsonify({"id": item_id, "count": count})
+    return jsonify({"item":{"id": item_id, "count": count}})
 
 
 @app.route('/transactions', methods=['GET'])
