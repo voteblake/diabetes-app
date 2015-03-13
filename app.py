@@ -131,6 +131,8 @@ def add_transaction():
     if Item.query.get(request.json['item_id']) == None:
         abort(400)
     new_transaction = Transaction(item_id=request.json['item_id'], quantity=request.json['quantity'])
+    if 'adjustment' in request.json:
+        new_transaction.adjustment = request.json['adjustment']
     db.session.add(new_transaction)
     db.session.commit()
     return jsonify(transaction=new_transaction.as_dict()), 201
