@@ -6,3 +6,11 @@
 .row {
     margin-top: 15px;
 }
+
+.col-md-2 {
+    padding: 0px;
+}
+
+form {
+    padding: 8px;
+}
