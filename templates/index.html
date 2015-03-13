@@ -32,10 +32,10 @@
                 <form novalidate >
                     <div class="form-group form-group-sm">
                         <label class="control-label" for="item-select">Item:</label>
-                        <select class="form-control" id="item-select" ng-model="transaction.item_id">
-                            {% raw %}
-                            <option ng-repeat="item in items">{{item.name}}</option>
-                            {% endraw %}
+                        <select class="form-control" id="item-select" ng-model="transaction.id" ng-options="item.id as item.name for item in chooseItem">
+<!--                             {% raw %}
+                            <option ng-repeat="item in $scope.items" value="{{item.id}}">{{item.name}}</option>
+                            {% endraw %} -->
                         </select>
                     </div>
                     <div class="form-group form-group-sm">

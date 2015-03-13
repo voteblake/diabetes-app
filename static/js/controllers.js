@@ -12,3 +12,25 @@ diabetesControllers.controller('ItemListCtrl', ['$scope', '$http',
             };
         });
     }]);
+
+diabetesControllers.controller('TransactionCtrl', ['$scope', '$http',
+    function ($scope, $http) {
+        $http.get('items').success(function (data) {
+            $scope.chooseItem = data.items;
+        });
+        $scope.add = function (transaction) {
+            var newTxn = {
+                item_id : $scope.transaction.id,
+                quantity : $scope.transaction.quantity
+            };
+            var res = $http.post('/transactions', newTxn);
+            res.success(function(data, status, headers, config) {
+                console.log(newTxn);
+            });
+            res.error(function(data, status, headers, config) {
+                alert( "failure message: " + JSON.stringify({data: data}));
+            });
+            $scope.item_id = '';
+            $scope.quantity = '';
+        };
+    }]);
