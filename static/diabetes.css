@@ -14,3 +14,7 @@
 form {
     padding: 8px;
 }
+
+.form-actions{
+    text-align: center;
+}
