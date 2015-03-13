@@ -78,7 +78,7 @@ def get_items():
     """
     Returns a JSON document of all items
     """
-    return jsonify({'items': list(map(lambda x: x.as_dict(), Item.query.all()))})
+    return jsonify(items=list(map(lambda x: x.as_dict(), Item.query.all())))
 
 @app.route('/items', methods=['POST'])
 def add_item():
@@ -94,7 +94,7 @@ def add_item():
 
     db.session.add(new_item)
     db.session.commit()
-    return jsonify({'item': new_item.as_dict()}), 201
+    return jsonify(item=new_item.as_dict()), 201
 
 @app.route('/items/<int:item_id>/inventory', methods=['GET'])
 def get_item_inventory(item_id):
@@ -111,7 +111,7 @@ def get_transactions():
     """
     Returns a JSON document of all transactions
     """
-    return jsonify({'transactions': list(map(lambda x: x.as_dict(), Transaction.query.all()))})
+    return jsonify(transactions=list(map(lambda x: x.as_dict(), Transaction.query.all())))
 
 @app.route('/transactions', methods=['POST'])
 def add_transaction():
@@ -128,7 +128,7 @@ def add_transaction():
     new_transaction = Transaction(item_id=request.json['item_id'], quantity=request.json['quantity'])
     db.session.add(new_transaction)
     db.session.commit()
-    return jsonify({'transaction': new_transaction.as_dict()}), 201
+    return jsonify(transaction=new_transaction.as_dict()), 201
 
 if __name__ == '__main__':
     app.debug = True
