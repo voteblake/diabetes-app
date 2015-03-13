@@ -26,9 +26,24 @@
                 </div>
             </div>
         </div>
-        <div class="col-xs-12 col-md-2">
-            <div class="panel panel-primary">
+        <div class="col-xs-12 col-md-3">
+            <div class="panel panel-primary" ng-controller="TransactionCtrl">
                 <div class="panel-heading">Add Transaction</div>
+                <form novalidate >
+                    <div class="form-group form-group-sm">
+                        <label class="control-label" for="item-select">Item:</label>
+                        <select class="form-control" id="item-select" ng-model="transaction.item_id">
+                            {% raw %}
+                            <option ng-repeat="item in items">{{item.name}}</option>
+                            {% endraw %}
+                        </select>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <label class="control-label" for="quantity-field">Quantity:</label>
+                        <input type="number" class="form-control" id="quantity-field" ng-model="transaction.quantity">
+                    </div>
+                    <button type="submit" class="btn btn-default"  ng-click="add(transaction)">Submit</button>
+                </form>
             </div>
         </div>
     </div>
