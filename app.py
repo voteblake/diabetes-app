@@ -11,6 +11,7 @@ from flask import Flask, jsonify, render_template, request, abort
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
+from flask_bootstrap import Bootstrap
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.sqlite'
@@ -20,6 +21,8 @@ migrate = Migrate(app, db)
 
 manager = Manager(app)
 manager.add_command('db', MigrateCommand)
+
+Bootstrap(app)
 
 class Item(db.Model):
     """
