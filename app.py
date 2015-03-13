@@ -60,11 +60,13 @@ class Transaction(db.Model):
     item_id = db.Column(db.Integer, db.ForeignKey('item.id'))
     time = db.Column(db.DateTime)
     quantity = db.Column(db.Integer)
+    adjustment = db.Column(db.Boolean)
 
-    def __init__(self, item_id, quantity):
+    def __init__(self, item_id, quantity, adjustment=False):
         self.item_id = item_id
         self.time = datetime.now()
         self.quantity = quantity
+        self.adjustment = adjustment
 
     def as_dict(self):
         """
