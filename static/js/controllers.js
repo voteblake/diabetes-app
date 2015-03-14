@@ -32,19 +32,15 @@ diabetesControllers.controller('ItemListCtrl', ['$scope', '$http',
 
 diabetesControllers.controller('TransactionCtrl', ['$scope', '$http',
     function ($scope, $http) {
+        $scope.transactionList = [];
         $http.get('transactions').success(function (data) {
-            $scope.transactions = data.transactions;
-            $scope.totalTransactions = $scope.transactions.length;
-        });
+            $scope.transactionList = data.transactions;
 
-        $scope.currentPage = 1;
-        $scope.numPerPage = 10;
+        })
 
-        $scope.paginate = function (value) {
-            var begin, end, index;
-            begin = ($scope.currentPage - 1) * $scope.numPerPage;
-            end = begin + $scope.numPerPage;
-            index = $scope.transactions.indexOf(value);
-            return (begin <= index && index < end);
-        };
+        $scope.config = {
+            itemsPerPage: 10,
+            maxPages: 5,
+            fillLastPage: "yes"
+        }
     }]);

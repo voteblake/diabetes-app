@@ -15,6 +15,10 @@ form {
     padding: 8px;
 }
 
-.form-actions{
+.form-actions {
     text-align: center;
+}
+
+.col-md-6 {
+    padding-right: 0px;
 }
