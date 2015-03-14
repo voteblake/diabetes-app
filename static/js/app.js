@@ -1,1 +1,1 @@
-var diabetesApp = angular.module('diabetesApp', ['diabetesControllers']);
+var diabetesApp = angular.module('diabetesApp', ['ui.bootstrap','diabetesControllers']);

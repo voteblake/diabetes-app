@@ -29,3 +29,22 @@ diabetesControllers.controller('ItemListCtrl', ['$scope', '$http',
             $scope.transaction.quantity = '';
         }
     }]);
+
+diabetesControllers.controller('TransactionCtrl', ['$scope', '$http',
+    function ($scope, $http) {
+        $http.get('transactions').success(function (data) {
+            $scope.transactions = data.transactions;
+            $scope.totalTransactions = $scope.transactions.length;
+        });
+
+        $scope.currentPage = 1;
+        $scope.numPerPage = 10;
+
+        $scope.paginate = function (value) {
+            var begin, end, index;
+            begin = ($scope.currentPage - 1) * $scope.numPerPage;
+            end = begin + $scope.numPerPage;
+            index = $scope.transactions.indexOf(value);
+            return (begin <= index && index < end);
+        };
+    }]);
