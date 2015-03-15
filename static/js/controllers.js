@@ -31,3 +31,21 @@ diabetesControllers.controller('ItemListCtrl', ['$scope', '$http',
             $scope.transaction.quantity = '';
         }
     }]);
+
+diabetesControllers.controller('DoseCalcCtrl', ['$scope',
+    function ($scope) {
+        $scope.carbs = 0;
+        $scope.ic = 10;
+        $scope.insulinOB = 0;
+        $scope.activityMultiplier = 1.0;
+        $scope.currentBG = 10;
+        $scope.targetBG = 10;
+
+        var correctionFactor = 4;
+
+        $scope.calcDose = function () {
+            var correctionDose = ($scope.currentBG - $scope.targetBG) / correctionFactor;
+            var foodDose = $scope.carbs / $scope.ic;
+            $scope.dose = (foodDose + correctionDose - $scope.insulinOB) * $scope.activityMultiplier;
+        };
+    }]);
