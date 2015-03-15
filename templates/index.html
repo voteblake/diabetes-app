@@ -15,7 +15,7 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">Items Remaining</div>
                 <div class="table-responsive">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered" ng-hide="tableHidden">
                         {% raw %}
                         <tr ng-repeat="item in items">
                             <td>{{item.name}}</td>

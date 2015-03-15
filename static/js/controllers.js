@@ -2,6 +2,7 @@ var diabetesControllers = angular.module('diabetesControllers', []);
 
 diabetesControllers.controller('ItemListCtrl', ['$scope', '$http',
     function ($scope, $http) {
+        $scope.tableHidden = true;
         $http.get('items').success(function (data){
             $scope.items = data.items;
             for (var i = data.items.length - 1; i >= 0; i--) {
@@ -10,6 +11,7 @@ diabetesControllers.controller('ItemListCtrl', ['$scope', '$http',
                     $scope.items[countDocument.item.id - 1].count = countDocument.item.count;
                 });
             };
+            $scope.tableHidden = false;
         });
         $scope.add_txn = function (transaction) {
             var newTxn = {
