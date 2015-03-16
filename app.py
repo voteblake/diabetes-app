@@ -64,7 +64,7 @@ class Transaction(db.Model):
 
     def __init__(self, item_id, quantity, adjustment=False):
         self.item_id = item_id
-        self.time = datetime.now()
+        self.time = datetime.utcnow()
         self.quantity = quantity
         self.adjustment = adjustment
 
