@@ -28,7 +28,8 @@ diabetesControllers.controller('ItemListCtrl', ['$scope', '$http',
                 alert( "failure message: " + JSON.stringify({data: data}));
             });
             $scope.transaction.id = '';
-            $scope.transaction.quantity = '';
+            $scope.transaction.quantity = '-1';
+            $scope.transaction.adjustment = false;
         }
     }]);
 
