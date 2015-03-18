@@ -41,7 +41,7 @@ diabetesControllers.controller('DoseCalcCtrl', ['$scope',
         $scope.activityMultiplier = 1.0;
         $scope.currentBG = 10;
         $scope.targetBG = 10;
-        $scope.correctionSensitivity = 4;
+        $scope.correctionSensitivity = 3.4;
 
         $scope.dose = 0.0;
 
