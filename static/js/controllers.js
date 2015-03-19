@@ -19,10 +19,15 @@ diabetesControllers.controller('ItemListCtrl', ['$scope', '$http',
                 quantity : $scope.transaction.quantity,
                 adjustment : $scope.transaction.adjustment
             };
+
+            $scope.items[newTxn.item_id - 1].count += newTxn.quantity;
+
             var res = $http.post('/transactions', newTxn);
             res.success(function(data, status, headers, config) {
-                $scope.items[newTxn.item_id - 1].count += newTxn.quantity;
                 console.log(newTxn);
+                $http.get('items/' + newTxn.item_id + '/inventory').success(function (countDocument) {
+                    $scope.items[countDocument.item.id - 1].count = countDocument.item.count;
+                });
             });
             res.error(function(data, status, headers, config) {
                 alert( "failure message: " + JSON.stringify({data: data}));
