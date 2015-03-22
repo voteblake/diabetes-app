@@ -5,74 +5,26 @@ used in day to day treatment of type one diabetes
 allows users to define items, use and resupply those items
 and view their current inventory
 """
-from datetime import datetime
 
 from flask import Flask, jsonify, render_template, request, abort
-from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
 from flask_bootstrap import Bootstrap
 
+from models.database import db
+from models.item import Item
+from models.transaction import Transaction
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.sqlite'
 
-db = SQLAlchemy(app)
+db.init_app(app)
 migrate = Migrate(app, db)
 
 manager = Manager(app)
 manager.add_command('db', MigrateCommand)
 
 Bootstrap(app)
-
-class Item(db.Model):
-    """
-    Item class - SQLAlchemy Model - Defines an instance
-    of items, consumable objects whose inventory the user
-    wishes to track.
-    """
-    __tablename__ = 'item'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(64))
-    description = db.Column(db.Text)
-    transactions = db.relationship("Transaction", backref="item")
-
-    def __init__(self, name, description=None):
-        self.name = name
-        self.description = description
-
-    def __repr__(self):
-        return '<Item %r>' % self.name
-
-    def as_dict(self):
-        """
-        Method for returning a valid dictionary from SQLAlchemy model objects
-        """
-        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
-
-class Transaction(db.Model):
-    """
-    Transaction class - SQLAlchemy Model - A transaction is an Integer
-    quantity change in the count on hand of any one given item. The aggregate of
-    these is used to calculate quantity on hand.
-    """
-    __tablename__ = 'transaction'
-    id = db.Column(db.Integer, primary_key=True)
-    item_id = db.Column(db.Integer, db.ForeignKey('item.id'))
-    time = db.Column(db.DateTime)
-    quantity = db.Column(db.Integer)
-    adjustment = db.Column(db.Boolean)
-
-    def __init__(self, item_id, quantity, adjustment=False):
-        self.item_id = item_id
-        self.time = datetime.utcnow()
-        self.quantity = quantity
-        self.adjustment = adjustment
-
-    def as_dict(self):
-        """
-        Method for returning a valid dictionary from SQLAlchemy model objects
-        """
-        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 @app.route('/', methods=['GET'])
 def index():
