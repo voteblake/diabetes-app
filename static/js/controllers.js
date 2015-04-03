@@ -53,18 +53,19 @@ diabetesControllers.controller('ItemListCtrl', ['$scope', '$http',
 diabetesControllers.controller('DoseCalcCtrl', ['$scope',
     function ($scope) {
         $scope.carbs = 0;
-        $scope.ic = 10;
+        $scope.ic = 7.5;
         $scope.insulinOB = 0;
         $scope.activityMultiplier = 1.0;
         $scope.currentBG = 10;
-        $scope.targetBG = 10;
-        $scope.correctionSensitivity = 3.4;
-
-        $scope.dose = 0.0;
+        $scope.targetBG = 8;
+        $scope.correctionSensitivity = 2.8;
 
         $scope.calcDose = function () {
             var correctionDose = Math.max(0, ((($scope.currentBG - $scope.targetBG) / $scope.correctionSensitivity) - $scope.insulinOB));
             var foodDose = $scope.carbs / $scope.ic;
             $scope.dose = (foodDose + correctionDose) * $scope.activityMultiplier;
         };
+
+        $scope.calcDose();
+
     }]);
