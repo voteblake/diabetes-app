@@ -9,16 +9,21 @@ diabetesControllers.controller('ItemListCtrl', ['$scope', '$http',
             quantity: -1
         };
 
-        $http.get('items').success(function (data){
-            $scope.items = data.items;
-            for (var i = data.items.length - 1; i >= 0; i--) {
-                var httpget = 'items/' + data.items[i].id + '/inventory'
-                $http.get(httpget).success(function (countDocument){
+        $scope.updateInventory = function () {
+            for (var i = $scope.items.length - 1; i >= 0; i--) {
+                var uriString = 'items/' + $scope.items[i].id + '/inventory'
+                $http.get(uriString).success(function (countDocument){
                     $scope.items[countDocument.item.id - 1].count = countDocument.item.count;
                 });
             };
+        };
+
+        $http.get('items').success(function (data){
+            $scope.items = data.items;
+            $scope.updateInventory();
             $scope.tableHidden = false;
         });
+
         $scope.add_txn = function (transaction) {
             var newTxn = {
                 item_id : $scope.transaction.id,
