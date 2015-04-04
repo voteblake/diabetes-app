@@ -8,6 +8,13 @@
     <link href="{{url_for('static', filename='diabetes.css')}}" rel='stylesheet'>
 {% endblock %}
 
+{% block head %}
+    {{super()}}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.14/angular.min.js"></script>
+    <script src="{{url_for('static', filename='js/app.js')}}"></script>
+    <script src="{{url_for('static', filename='js/controllers.js')}}"></script>
+{% endblock %}
+
 {% block content %}
 <div class="container-fluid">
     <div class="row" ng-controller="ItemListCtrl">
@@ -92,7 +99,4 @@
 
 {% block scripts %}
     {{super()}}
-    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.14/angular.min.js"></script>
-    <script src="{{url_for('static', filename='js/app.js')}}"></script>
-    <script src="{{url_for('static', filename='js/controllers.js')}}"></script>
 {% endblock %}
